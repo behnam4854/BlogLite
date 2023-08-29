@@ -32,8 +32,8 @@ class Post(models.Model):
     slug = models.SlugField(unique=True)
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag)
+    categories = models.ManyToManyField('Category', related_name='posts')
+    tags = models.ManyToManyField('Tag', related_name='posts')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
