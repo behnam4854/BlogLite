@@ -27,7 +27,15 @@
   </nav>
 
   {% block content %}
-
+  <h1>Articles</h1>
+    <ul>
+    {% for post in object_list %}
+        <li><a href={{ post.slug }}>{{ post.title }}<a/></li>
+        <p>{{ post.content }}<p/>
+    {% empty %}
+        <li>No articles yet.</li>
+    {% endfor %}
+    </ul>
   {% endblock %}
 
   <script src="{% static 'js/main.js' %}"></script>

@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>{% block title %}My Site{% endblock %}</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+</head>
+
+<body>
+
+  <header>
+    <h1>My Site</h1>
+  </header>
+
+  <nav>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+
+  {% block content %}
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.slug }}</p>
+    <p>content: {{ post.content }}</p>
+    {% for c in post.categories.all %}
+        <li>{{ c.name }}</li>
+    {% empty %}
+        <li>No tag yet.</li>
+    {% endfor %}
+  {% endblock %}
+
+  <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>
