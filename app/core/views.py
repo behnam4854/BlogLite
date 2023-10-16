@@ -7,6 +7,37 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import Post
 import datetime
+from django.contrib.auth.models import User
+from rest_framework import viewsets
+from rest_framework import permissions
+from .serializers import UserSerializer, PostSerializer
+
+
+class PostlistView(ListView):
+    """for retriving all the post in the home view"""
+    model = Post
+    # paginate_by = 4
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["now"] = datetime.datetime.now()
+        return context
+
+class PostDetailView(DetailView):
+    """for views the single post detail view and reviewing it"""
+    model = Post
+
+class UserViewSet(viewsets.ModelViewSet):
+    """view for managing the user"""
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated,]
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAdminUser,]
+
 
 # @require_safe
 # def homeview(request):
@@ -28,17 +59,3 @@ import datetime
 
 #     def get(self, request):
 #         return HttpResponse(self.greeting)
-
-class PostlistView(ListView):
-    """for retriving all the post in the home view"""
-    model = Post
-    # paginate_by = 4
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["now"] = datetime.datetime.now()
-        return context
-
-class PostDetailView(DetailView):
-    """for views the single post detail view and reviewing it"""
-    model = Post
