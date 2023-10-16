@@ -8,7 +8,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ['url', 'username','first_name', 'email', 'is_staff']
+        fields = ['url', 'username','first_name', 'email', 'password','is_staff',]
+
+        extra_kwargs = {
+            "password": {"write_only": True},
+        }
 
 class PostSerializer(serializers.ModelSerializer):
     """for managing update, create and delete post"""
